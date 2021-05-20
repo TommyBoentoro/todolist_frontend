@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react"
+import {BrowserRouter, Switch, Route}  from "react-router-dom"
+import Register from "./Pages/Register"
+import EmailConfirmation from "./Pages/EmailConfirmation"
+import login from "./Pages/Login"
+import todolist from "./Pages/todolist"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+// Redux
+import {applyMiddleware, createStore} from "redux"
+import {Provider} from "react-redux"
+import thunk from "redux-thunk"
+import allReducer from "./Redux/Reducer/index"
+
+const store = createStore(allReducer, applyMiddleware(thunk))
+
+function App(){
+  return(
+   <Provider store={store}>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path= "/" component={todolist} />
+          <Route path="/confirmation/:id/:pass/:cat" component={EmailConfirmation}/>
+          <Route path="/login" component={login}/>
+          <Route path="/register" component={Register}/>
+        </Switch>
+      </BrowserRouter>
+   </Provider>
   );
 }
+
 
 export default App;
