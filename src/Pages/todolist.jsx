@@ -5,19 +5,21 @@ import {Link} from "react-router-dom"
 
 // Import Action
 import {checkUserVerify} from "./../Redux/Actions/UserAction"
+import {onuserLogout} from "./../Redux/Actions/UserAction"
 import {onGetToDo} from "./../Redux/Actions/todoAction"
 import {onDoneToDo} from "./../Redux/Actions/todoAction"
 import {onDeleteToDo} from "./../Redux/Actions/todoAction"
 
+
 // Import Component 
 import CreateModal from "./../Components/CreateToDoModal"
 import { findRenderedDOMComponentWithClass } from "react-dom/test-utils"
+import { CardTitle } from "reactstrap"
 
 class todolist extends React.Component{
 
     state = {
         showCreateModal : false,
-        donetodo : false,
         idData : null
     }
     
@@ -45,10 +47,10 @@ class todolist extends React.Component{
     }
 
     onDoneData = (index1,index2) => {
-        this.setState({donetodo: true})
         let token = localStorage.getItem(`my-tkn`)
         
         let id = this.props.todo.data[index1].todolist[index2].id
+       
         
         
         let data = {
@@ -57,6 +59,8 @@ class todolist extends React.Component{
             
         }
         console.log(data)
+        
+        window.location = "/home"
 
         this.props.onDoneToDo(data)
     }
@@ -74,10 +78,22 @@ class todolist extends React.Component{
             
         }
 
-        window.location = "/"
+        window.location = "/home"
 
 
         this.props.onDeleteToDo(deleteTodo)
+    }
+
+    onLogout = () => {
+        let token = localStorage.getItem(`my-tkn`)
+        
+        let data = {
+            token
+        }
+        console.log(data)
+
+        
+        this.props.onuserLogout(data)
     }
     
     render(){
@@ -88,18 +104,19 @@ class todolist extends React.Component{
                 </div>
             )
         }
-
+        // Note = 
+        // 1. Page Register 
+        // 2. Page Login
+        // 3. Home ada Logout --> kalo di logout hapus token dan balik ke register
         return(
            <> 
            <div style = {{height: "100vh", background: "#F6F6F6"}}>
-                <div className ="d-flex justify-content-end" style={{fontFamily : "Playfair Display", fontSize: "24px", fontWeight: "900", marginRight : "150px"}}>
-                    <nav className="navbar navbar-light">
-                        <Link to="/register" style={{color: "#39986E"}}>Sign Up</Link>
-                        <Link to="/login" style={{color: "#39986E", marginLeft: "30px"}}>Login</Link>
-                    </nav>
-                </div>
-
                 <div className="container ">
+                <nav class="navbar navbar-light bg-light d-flex justify-content-end">
+                     <Link to="/" style={{fontFamily: "Playfair Display", fontSize: "24px", color: "#47B785", fontWeight: "bold"}}>Logout</Link>
+                     {/* <input type="button" value ="logout" className="btn btn-primary" onClick= {()=> this.onLogout()} /> */}
+                </nav>
+                    
                     <div className="row justify-content-center py-5">
                         <div className="col-8">
                             { 
@@ -119,7 +136,7 @@ class todolist extends React.Component{
                                 </div>
 
                                 <div className="row px-3">
-                                    {
+                                    {                                         
                                         this.props.todo.data.map((value,index) => {
                                             return(
                                                 <>
@@ -131,33 +148,35 @@ class todolist extends React.Component{
 
                                                     {
                                                         value.todolist.map((val,idx)=> {
-                                                        return(
-                                                            <>
-                                                                {
-                                                                    
-                                                                    this.state.donetodo?
+                                                            if(val.status === 1 ){
+                                                                return(
                                                                     <div className ="col-12">
                                                                         <span style={{fontSize: '18px'}}>
                                                                             {val.title} - {val.description} 
                                                                         </span>
                                                                     </div>
-                                                                    :
-                                                                    <div className="col-12 border border-black">
-                                                                        <div >
-                                                                                <span style={{fontSize: '18px'}}>
-                                                                                    {val.title} - {val.description} 
-                                                                                </span>
-                                                                                <input type="button" value="Done" onClick={() => this.onDoneData(index,idx)} className="btn btn-outline-success" style={{fontSize: "12px", height:"25px" }} />
-                                                                                <input type="button" value="Delete" onClick={() => this.onDeleteData(index,idx)} className="btn btn-outline-danger" style={{fontSize: "12px", height:"25px" }} />
-                                                                        </div>
-                                                                        
+                                                                )
+                                                            }else{
+                                                                return(
+                                                                    <div className="col-12 d-flex justify-content-between " style={{width: "500px"}}>
+                                                                    <div >
+                                                                            <span style={{fontSize: '18px'}}>
+                                                                                {val.title} - {val.description}
+                                                                            </span>
+                                                                            
                                                                     </div>
-                                                                    
-                                                                        
-                                                                }
-                                                            </>
-                                                        )
+                                                                    <div className="ml-auto">
+                                                                            <input type="button" value="Done" onClick={() => this.onDoneData(index,idx)} className="btn btn-success btn-sm"  />
+                                                                            <input type="button" value="Delete" onClick={() => this.onDeleteData(index,idx)} className="btn btn-danger btn-sm" style={{marginLeft: "20px" }} />
+                                                                    </div>
+                                                                   
+                                                                    <br /><br/>
+                                                                </div>
+                                                                )
+                                                            }
+                    
                                                         })
+                                                        
                                                     }
                                                     <br/>
                                                     <br/>
@@ -181,7 +200,7 @@ class todolist extends React.Component{
 }
 
 const mapDispatchToProps = {
-    checkUserVerify, onGetToDo, onDoneToDo, onDeleteToDo
+    checkUserVerify, onGetToDo, onDoneToDo, onDeleteToDo, onuserLogout
 }
 
 const mapStateToProps = (state) => {

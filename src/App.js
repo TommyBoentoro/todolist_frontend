@@ -18,10 +18,10 @@ function App(){
    <Provider store={store}>
       <BrowserRouter>
         <Switch>
-          <Route exact path= "/" component={todolist} />
+          <Route exact path= "/" component={Register} />
           <Route path="/confirmation/:id/:pass/:cat" component={EmailConfirmation}/>
           <Route path="/login" component={login}/>
-          <Route path="/register" component={Register}/>
+          <Route path="/home" component={todolist}/>
         </Switch>
       </BrowserRouter>
    </Provider>

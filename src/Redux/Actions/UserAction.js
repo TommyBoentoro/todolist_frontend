@@ -83,6 +83,19 @@ export const onUserLogin = (data) => {
     }
 }
 
+export const onuserLogout = (data) => {
+    return(dispatch) => {
+        Axios.post(`http://localhost:4000/authentic-system/logout`, data)
+        .then((res)=> {
+            console.log(res.data)
+            localStorage.removeItem("my-tkn")
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+    }
+}
+
 export const checkUserVerify = (token) => {
     return(dispatch) => {
         Axios.post(`http://localhost:4000/authentic-system/user-verify`, {token})

@@ -27,6 +27,8 @@ class Register extends React.Component{
        if(!(validator.isEmail(email))) throw this.setState({error: `Email Not Valid`, loading: false})
        if(password.length < 6) throw this.setState({error: `Password Must Contain At Least 6 Characters`, loading: false})
 
+       
+
        this.props.onUSerRegister(email, password)
 
       
@@ -83,9 +85,13 @@ class Register extends React.Component{
                                 </button>
 
                                 <h6 className="mt-1 text-danger">
-                                    {this.state.error}
+                                    {/* {this.state.error} */}
                                     {
+                                        this.props.user.message?
                                         this.props.user.message
+                                        :
+                                        this.state.error
+                                        
                                     }
                                 </h6>
                            </div>

@@ -17,6 +17,7 @@ export const onCreateToDo = (dataToSend) => {
             .then((response)=> {
                 console.log(response.data.Data[0].todolist[0].id)
                 localStorage.setItem("id-data", response.data.Data[0].todolist[0].id )
+                
                 dispatch( 
                     {
                         type: `TODO_SUCCESS`,
@@ -68,16 +69,18 @@ export const onDoneToDo = (data) => {
     return(dispatch) => {
         Axios.post(`http://localhost:4000/todo/done`, data)
             .then((response) => {    
-                dispatch({
-                    type: `DONE_SUCCESS`,
-                    payload: response.data.data
-                })
+                console.log(response)
+                // dispatch({
+                //     type: `DONE_SUCCESS`,
+                //     payload: response.data.data
+                // })
             })
             .catch((error) => {
-                dispatch({
-                    type: `DONE_ERROR`,
-                    payload: error.response
-                })
+                console.log(error)
+                // dispatch({
+                //     type: `DONE_ERROR`,
+                //     payload: error.response
+                // })
             })
     }
 }

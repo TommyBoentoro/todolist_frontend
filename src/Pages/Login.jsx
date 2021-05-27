@@ -36,7 +36,7 @@ class login extends React.Component{
     render(){
         if(this.props.user.isRedirect){
            return(
-            <Redirect to="/"/>
+            <Redirect to="/home"/>
            )
         }
             return(      
