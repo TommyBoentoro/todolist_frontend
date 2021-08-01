@@ -18,16 +18,19 @@ class login extends React.Component{
     }
 
     onLogin = () => {
+
+        let email = this.email.value
+        let password = this.password.value
+
         let data = {
             email: this.email.value,
             password: this.password.value
         }
 
-        // let email= this.email.value
-        // let password = this.password.value
         
-        // if(!email || !password) throw this.setState({error: `Data Must be Filled`})
-        // if(!(validator.isEmail(email))) throw this.setState({error: `Email Not Valid`, loading: false})
+        
+        if(!email || !password) throw this.setState({error: `Data Must be Filled`})
+        if(!(validator.isEmail(email))) throw this.setState({error: `Email Not Valid`, loading: false})
         
         this.props.onUserLogin(data)
 
@@ -76,7 +79,10 @@ class login extends React.Component{
 
                                     <p className="mt-1 text-danger">
                                         {
-                                            this.props.user.message
+                                            this.props.user.message2?
+                                            this.props.user.message2
+                                            :
+                                            this.state.error
                                         }
                                     </p>
                             </div>

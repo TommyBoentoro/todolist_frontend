@@ -3,7 +3,8 @@ let initialState = {
     token : null,
     message: null,
     isRedirect: false,
-    is_email_confirmed: null
+    is_email_confirmed: null,
+    message2: null
 }
 
 const userReducer = (state = initialState, action) => {
@@ -17,7 +18,7 @@ const userReducer = (state = initialState, action) => {
         case `LOGIN_SUCCESS`:
             return {...state, token: action.payload, isRedirect: true}
         case `LOGIN_ERROR` :
-            return {...state, message: action.payload}
+            return {...state, message2: action.payload}
         case `CHECK_USER_VERIFY_SUCCESS` :
             return {...state, is_email_confirmed: action.payload}
         case `CHECK_USER_VERIFY_ERROR`:

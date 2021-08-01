@@ -1,7 +1,8 @@
 let initialState = {
     loading: false,
     data: null,
-    message: null
+    message: null,
+   
 }
 
 const todoReducer = (state = initialState, action) => {

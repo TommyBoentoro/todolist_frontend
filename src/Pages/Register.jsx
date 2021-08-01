@@ -85,13 +85,13 @@ class Register extends React.Component{
                                 </button>
 
                                 <h6 className="mt-1 text-danger">
-                                    {/* {this.state.error} */}
                                     {
+                                        
                                         this.props.user.message?
                                         this.props.user.message
                                         :
                                         this.state.error
-                                        
+                                            
                                     }
                                 </h6>
                            </div>

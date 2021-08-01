@@ -10,6 +10,7 @@ export const onUSerRegister = (email,password) => {
         )
         Axios.post(`http://localhost:4000/authentic-system/register`, {email: email, password: password})
         .then((res)=> {
+            console.log(res)
             dispatch(
                 {
                     type: `AUTH_SUCCESS`,
@@ -18,10 +19,11 @@ export const onUSerRegister = (email,password) => {
             )
         })
         .catch((err)=> {
+            console.log(err)
             dispatch(
                 {
                     type: `AUTH_ERROR`,
-                    payload: err.message
+                    payload: err.res.data.message
                 }
             )
         })
@@ -50,10 +52,9 @@ export const onUserLogin = (data) => {
         })
         Axios.post(`http://localhost:4000/authentic-system/login`, data)
         .then((res)=> {
-            console.log(res.data)
+            console.log(res.data.message)
             if(res.data.error === false){
                 
-                localStorage.setItem("my-tkn", res.data.data.token)
                 dispatch(
                     {
                         type: `LOGIN_SUCCESS`,
